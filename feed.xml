@@ -110,13 +110,5 @@
         <guid isPermaLink="true">http://quarion.github.io/blog/2016/03/06/event-based-design-introduction/</guid>
       </item>
     
-      <item>
-        <title>Events Bus</title>
-        <description></description>
-        <pubDate>Sun, 07 Feb 2016 13:11:00 +0000</pubDate>
-        <link>http://quarion.github.io/blog/2016/02/07/events-bus/</link>
-        <guid isPermaLink="true">http://quarion.github.io/blog/2016/02/07/events-bus/</guid>
-      </item>
-    
   </channel>
 </rss>
