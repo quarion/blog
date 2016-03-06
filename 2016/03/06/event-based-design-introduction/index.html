@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Event based design, part 1 - Introduction &#8211; Filip Gibki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Filip&#39;s Notebook">
+    <meta name="robots" content="all">
+    <meta name="author" content="Filip Gibki">
+    <meta name="keywords" content="">
+    <link rel="canonical" href="http://quarion.github.io/blog/2016/03/06/event-based-design-introduction/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Filip Gibki" href="/blog/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/pixyll.css?201603061623" type="text/css">
+
+    <!-- Fonts -->
+    
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+    
+
+    <!-- MathJax -->
+    
+
+    <!-- Verifications -->
+    
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Event based design, part 1 - Introduction">
+    <meta property="og:description" content="Filip&#39;s Notebook">
+    <meta property="og:url" content="http://quarion.github.io/2016/03/06/event-based-design-introduction/">
+    <meta property="og:site_name" content="Filip Gibki">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@FilipGibki" />
+    
+    <meta name="twitter:title" content="Event based design, part 1 - Introduction" />
+    <meta name="twitter:description" content="Filip's Notebook" />
+    <meta name="twitter:url" content="http://quarion.github.io/2016/03/06/event-based-design-introduction/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+</head>
+
+<body class="site">
+  
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://quarion.github.io" class="site-title">Filip Gibki</a>
+      <nav class="site-nav">
+        
+    
+
+    
+        <a href="/about/">About Pixyll</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+        <a href="/contact/">Say Hello</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>Event based design, part 1 - Introduction</h1>
+  <span class="post-meta">Mar 6, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    2 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <h2 id="introduction">Introduction</h2>
+
+<p>This article is first one in the series on incorporating events into an application design.</p>
+
+<p>The backbone of such a system is a communication pipeline (a <em>bus</em>) that allows event Subscribers and Publishers to exchange messages.</p>
+
+<p>This kind of communication can be introduced into the application using <strong>Event Aggregator</strong> pattern. <em>Event Aggregator</em> is an abstraction for a common source of events, that allows Subscribers and Publishers to use it independently, without knowledge of each other.  </p>
+
+<p>Concrete implementation of this pattern can have many variations, but it can be divided into two categories - <em>Event Bus</em> and <em>Event Collection</em></p>
+
+<h2 id="event-collection">Event Collection</h2>
+
+<p><strong>Event Collection</strong> is a class, that exposes events relevant for a given part of the system. The class must be implemented as a Singleton (to share state between different parts of the code), and simply exposes the defined events as its public properties. All of the parts of the system, that have access to this class, can easily subscribe to one of the defined events, or publish it, for all of the subscribers to receive.</p>
+
+<p>Example of an <em>Event Collection</em> in a <em>C#</em> language (full example is available on <a href="https://github.com/quarion/EventAggregator/tree/master/EventCollection">Github</a>)</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">EventAggregator</span>
+<span class="o">{</span>
+    <span class="c1">// Events definitions</span>
+    <span class="n">internal</span> <span class="n">delegate</span> <span class="kt">void</span> <span class="nf">OrderFinalizedEvent</span><span class="o">(</span><span class="n">object</span> <span class="n">sender</span><span class="o">,</span> <span class="n">object</span> <span class="n">args</span><span class="o">);</span>
+    <span class="n">internal</span> <span class="n">delegate</span> <span class="kt">void</span> <span class="nf">OrderCreatedEvent</span><span class="o">(</span><span class="n">object</span> <span class="n">sender</span><span class="o">,</span> <span class="n">object</span> <span class="n">args</span><span class="o">);</span>
+
+    <span class="c1">// Public accesors for events Subscribers</span>
+    <span class="kd">public</span> <span class="n">event</span> <span class="n">OrderCreatedEvent</span> <span class="n">OrderCreated</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">event</span> <span class="n">OrderFinalizedEvent</span> <span class="n">OrderFinalized</span><span class="o">;</span>
+
+    <span class="c1">// Public methods for events Publishers</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">OnOrderFinalized</span><span class="o">(</span><span class="n">object</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">OrderFinalized</span><span class="o">?.</span><span class="na">Invoke</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">OnOrderCreated</span><span class="o">(</span><span class="n">object</span> <span class="n">args</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">OrderCreated</span><span class="o">?.</span><span class="na">Invoke</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>While this implementation is very simple, and may be useful in small applications, at the same time it is very limited. Maintaining the list of events as public properties (often with public methods to dispatch them) may be very cumbersome and inflexible. As the number of different events in the system grows, it may be difficult to maintain.</p>
+
+<h2 id="event-bus">Event Bus</h2>
+
+<p><strong>Event Bus</strong> is a class, that exposes a generic way for handling events. It can route any event to any Subscriber, without defining them explicitly and up front.</p>
+
+<p>The concrete implementation may vary, especial depending on what a given programming language can offer. It can be simple matching of Messages to Subscribers based on string keys, or strongly typed approach based on generic classes.</p>
+
+<p>Signature of an <em>Event Bus</em> in a pseudo code</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleEventAggregator</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Subscribe</span><span class="o">(</span><span class="n">eventKey</span><span class="o">,</span> <span class="n">eventHandler</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Publish</span><span class="o">(</span><span class="n">eventKey</span><span class="o">,</span> <span class="n">eventData</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+<p>For a .NET ecosystem, a very good implementation of the <em>Event Bus</em> is available as a component of an open source library <em>Caliburn.Micro</em> (also available as a separate NuGet package, containing only the <em>Event Aggregator</em> code). It uses generics and strongly typed events.</p>
+
+<p>Quick example of publishing an event with <em>Caliburn.Micro</em> <em>EventAggregator</em> (full example available on <a href="https://github.com/quarion/EventAggregator/tree/master/EventBus">Github</a>)</p>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Producer</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="n">readonly</span> <span class="n">IEventAggregator</span> <span class="n">_eventAggregator</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">readonly</span> <span class="n">string</span> <span class="n">_name</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">IEventAggregator</span> <span class="n">eventAggregator</span><span class="o">,</span> <span class="n">string</span> <span class="n">name</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">_eventAggregator</span> <span class="o">=</span> <span class="n">eventAggregator</span><span class="o">;</span>
+
+        <span class="n">_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">CreateOrder</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">_eventAggregator</span><span class="o">.</span><span class="na">Publish</span><span class="o">(</span><span class="k">new</span> <span class="nf">OrderCreatedEvent</span><span class="o">(</span><span class="n">_name</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">OrderCreatedEvent</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="n">string</span> <span class="n">Name</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">OrderCreatedEvent</span><span class="o">(</span><span class="n">string</span> <span class="n">name</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">Name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>      
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="coming-next">Coming next</h2>
+
+<ul>
+<li>Design patterns for events based system</li>
+<li>Managing context</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<p><a href="http://martinfowler.com/eaaDev/EventAggregator.html">http://martinfowler.com/eaaDev/EventAggregator.html</a><br>
+<a href="http://caliburnmicro.com/documentation/event-aggregator">http://caliburnmicro.com/documentation/event-aggregator</a></p>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Theme crafted with &lt;3 by <a href="http://johnotander.com">John Otander</a> (<a href="https://twitter.com/4lpine">@4lpine</a>).<br>
+      &lt;/&gt; available on <a href="https://github.com/johnotander/pixyll">Github</a>.
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
