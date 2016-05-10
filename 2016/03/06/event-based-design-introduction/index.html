@@ -13,7 +13,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for Filip Gibki" href="/blog/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/blog/css/pixyll.css?201603062136" type="text/css">
+    <link rel="stylesheet" href="/blog/css/pixyll.css?201605101616" type="text/css">
 
     <!-- Fonts -->
     
@@ -66,6 +66,15 @@
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
 
     
+    <script type="text/javascript">
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+       ga('create', 'UA-77506199-1', 'auto');
+       ga('send', 'pageview');
+    </script>
+    
 </head>
 
 <body class="site">
@@ -112,6 +121,8 @@
       
         <div class="social-icons">
   <div class="social-icons-right">
+    
+      <a class="fa fa-github" href="https://github.com/quarion"></a>
     
     
     
@@ -166,7 +177,7 @@
 
 <p>The backbone of such a system is a communication pipeline (a <em>bus</em>) that allows event Subscribers and Publishers to exchange messages.</p>
 
-<p>This kind of communication can be introduced into the application using <strong>Event Aggregator</strong> pattern. <em>Event Aggregator</em> is an abstraction for a common source of events, that allows Subscribers and Publishers to use it independently, without knowledge of each other.  </p>
+<p>This kind of communication can be introduced into the application using <strong>Event Aggregator</strong> pattern. <em>Event Aggregator</em> is an abstraction for a common source of events, that allows Subscribers and Publishers to use it independently, without knowledge of each other.</p>
 
 <p>Concrete implementation of this pattern can have many variations, but it can be divided into two categories - <em>Event Bus</em> and <em>Event Collection</em></p>
 
@@ -175,28 +186,31 @@
 <p><strong>Event Collection</strong> is a class, that exposes events relevant for a given part of the system. The class must be implemented as a Singleton (to share state between different parts of the code), and simply exposes the defined events as its public properties. All of the parts of the system, that have access to this class, can easily subscribe to one of the defined events, or publish it, for all of the subscribers to receive.</p>
 
 <p>Example of an <em>Event Collection</em> in a <em>C#</em> language (full example is available on <a href="https://github.com/quarion/EventAggregator/tree/master/EventCollection">Github</a>)</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">EventAggregator</span>
-<span class="o">{</span>
-    <span class="c1">// Events definitions</span>
-    <span class="n">internal</span> <span class="n">delegate</span> <span class="kt">void</span> <span class="nf">OrderFinalizedEvent</span><span class="o">(</span><span class="n">object</span> <span class="n">sender</span><span class="o">,</span> <span class="n">object</span> <span class="n">args</span><span class="o">);</span>
-    <span class="n">internal</span> <span class="n">delegate</span> <span class="kt">void</span> <span class="nf">OrderCreatedEvent</span><span class="o">(</span><span class="n">object</span> <span class="n">sender</span><span class="o">,</span> <span class="n">object</span> <span class="n">args</span><span class="o">);</span>
 
-    <span class="c1">// Public accesors for events Subscribers</span>
-    <span class="kd">public</span> <span class="n">event</span> <span class="n">OrderCreatedEvent</span> <span class="n">OrderCreated</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="n">event</span> <span class="n">OrderFinalizedEvent</span> <span class="n">OrderFinalized</span><span class="o">;</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EventAggregator</span>
+<span class="p">{</span>
+    <span class="c1">// Events definitions
+</span>    <span class="k">internal</span> <span class="k">delegate</span> <span class="k">void</span> <span class="nf">OrderFinalizedEvent</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="kt">object</span> <span class="n">args</span><span class="p">);</span>
+    <span class="k">internal</span> <span class="k">delegate</span> <span class="k">void</span> <span class="nf">OrderCreatedEvent</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="kt">object</span> <span class="n">args</span><span class="p">);</span>
 
-    <span class="c1">// Public methods for events Publishers</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">OnOrderFinalized</span><span class="o">(</span><span class="n">object</span> <span class="n">args</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">OrderFinalized</span><span class="o">?.</span><span class="na">Invoke</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
-    <span class="o">}</span>
+    <span class="c1">// Public accesors for events Subscribers
+</span>    <span class="k">public</span> <span class="k">event</span> <span class="n">OrderCreatedEvent</span> <span class="n">OrderCreated</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">event</span> <span class="n">OrderFinalizedEvent</span> <span class="n">OrderFinalized</span><span class="p">;</span>
 
-    <span class="kd">public</span>  <span class="kt">void</span> <span class="nf">OnOrderCreated</span><span class="o">(</span><span class="n">object</span> <span class="n">args</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="n">OrderCreated</span><span class="o">?.</span><span class="na">Invoke</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
+    <span class="c1">// Public methods for events Publishers
+</span>    <span class="k">public</span> <span class="k">void</span> <span class="nf">OnOrderFinalized</span><span class="p">(</span><span class="kt">object</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">OrderFinalized</span><span class="p">?.</span><span class="nf">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span>  <span class="k">void</span> <span class="nf">OnOrderCreated</span><span class="p">(</span><span class="kt">object</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">OrderCreated</span><span class="p">?.</span><span class="nf">Invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
 <p>While this implementation is very simple, and may be useful in small applications, at the same time it is very limited. Maintaining the list of events as public properties (often with public methods to dispatch them) may be very cumbersome and inflexible. As the number of different events in the system grows, it may be difficult to maintain.</p>
 
 <h2 id="event-bus">Event Bus</h2>
@@ -206,63 +220,120 @@
 <p>The concrete implementation may vary, especial depending on what a given programming language can offer. It can be simple matching of Messages to Subscribers based on string keys, or strongly typed approach based on generic classes.</p>
 
 <p>Signature of an <em>Event Bus</em> in a pseudo code</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleEventAggregator</span>
-<span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Subscribe</span><span class="o">(</span><span class="n">eventKey</span><span class="o">,</span> <span class="n">eventHandler</span><span class="o">);</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Publish</span><span class="o">(</span><span class="n">eventKey</span><span class="o">,</span> <span class="n">eventData</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">SimpleEventAggregator</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Subscribe</span><span class="p">(</span><span class="n">eventKey</span><span class="p">,</span> <span class="n">eventHandler</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Publish</span><span class="p">(</span><span class="n">eventKey</span><span class="p">,</span> <span class="n">eventData</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
 <p>For a .NET ecosystem, a very good implementation of the <em>Event Bus</em> is available as a component of an open source library <em>Caliburn.Micro</em> (also available as a separate NuGet package, containing only the <em>Event Aggregator</em> code). It uses generics and strongly typed events.</p>
 
 <p>Quick example of publishing an event with <em>Caliburn.Micro</em> <em>EventAggregator</em> (full example available on <a href="https://github.com/quarion/EventAggregator/tree/master/EventBus">Github</a>)</p>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">Producer</span>
-<span class="o">{</span>
-    <span class="kd">private</span> <span class="n">readonly</span> <span class="n">IEventAggregator</span> <span class="n">_eventAggregator</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">readonly</span> <span class="n">string</span> <span class="n">_name</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">IEventAggregator</span> <span class="n">eventAggregator</span><span class="o">,</span> <span class="n">string</span> <span class="n">name</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">_eventAggregator</span> <span class="o">=</span> <span class="n">eventAggregator</span><span class="o">;</span>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Producer</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IEventAggregator</span> <span class="n">_eventAggregator</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="kt">string</span> <span class="n">_name</span><span class="p">;</span>
 
-        <span class="n">_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="k">public</span> <span class="nf">Producer</span><span class="p">(</span><span class="n">IEventAggregator</span> <span class="n">eventAggregator</span><span class="p">,</span> <span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">_eventAggregator</span> <span class="p">=</span> <span class="n">eventAggregator</span><span class="p">;</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">CreateOrder</span><span class="o">()</span>
-    <span class="o">{</span>
-        <span class="n">_eventAggregator</span><span class="o">.</span><span class="na">Publish</span><span class="o">(</span><span class="k">new</span> <span class="nf">OrderCreatedEvent</span><span class="o">(</span><span class="n">_name</span><span class="o">));</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+        <span class="n">_name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">CreateOrder</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">_eventAggregator</span><span class="p">.</span><span class="nf">Publish</span><span class="p">(</span><span class="k">new</span> <span class="nf">OrderCreatedEvent</span><span class="p">(</span><span class="n">_name</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
 
-<span class="kd">class</span> <span class="nc">OrderCreatedEvent</span>
-<span class="o">{</span>
-    <span class="kd">public</span> <span class="n">string</span> <span class="n">Name</span> <span class="o">{</span> <span class="n">get</span><span class="o">;</span> <span class="o">}</span>
+<span class="k">class</span> <span class="nc">OrderCreatedEvent</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="kd">public</span> <span class="nf">OrderCreatedEvent</span><span class="o">(</span><span class="n">string</span> <span class="n">name</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">Name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-    <span class="o">}</span>      
-<span class="o">}</span>
-</code></pre></div>
+    <span class="k">public</span> <span class="nf">OrderCreatedEvent</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="n">Name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>      
+<span class="p">}</span>
+</code></pre>
+</div>
+
 <h2 id="coming-next">Coming next</h2>
 
 <ul>
-<li>Design patterns for events based system</li>
-<li>Managing context</li>
+  <li>Design patterns for events based system</li>
+  <li>Managing context</li>
 </ul>
 
 <h2 id="references">References</h2>
 
-<p><a href="http://martinfowler.com/eaaDev/EventAggregator.html">http://martinfowler.com/eaaDev/EventAggregator.html</a><br>
+<p><a href="http://martinfowler.com/eaaDev/EventAggregator.html">http://martinfowler.com/eaaDev/EventAggregator.html</a><br />
 <a href="http://caliburnmicro.com/documentation/event-aggregator">http://caliburnmicro.com/documentation/event-aggregator</a></p>
 
 </article>
 
 
+  <div class="share-page">
+  Share this post!
+
+  <div class="share-links">
+    
+      <a class="fa fa-facebook" href="https://facebook.com/sharer.php?u=http://quarion.github.io/2016/03/06/event-based-design-introduction/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Event based design, part 1 - Introduction&url=http://quarion.github.io/2016/03/06/event-based-design-introduction/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://quarion.github.io/2016/03/06/event-based-design-introduction/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://quarion.github.io/2016/03/06/event-based-design-introduction/&title=Event based design, part 1 - Introduction" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://quarion.github.io/2016/03/06/event-based-design-introduction/&title=Event based design, part 1 - Introduction" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class="fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://quarion.github.io/2016/03/06/event-based-design-introduction/&t=Event based design, part 1 - Introduction" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+  </div>
+</div>
 
 
 
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'quarion';
+    var disqus_identifier = '/2016/03/06/event-based-design-introduction';
+    var disqus_title      = 'Event based design, part 1 - Introduction';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 
 

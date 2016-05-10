@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Commands and Aspects &#8211; Filip Gibki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Filip&#39;s Notebook">
+    <meta name="robots" content="all">
+    <meta name="author" content="Filip Gibki">
+    <meta name="keywords" content="">
+    <link rel="canonical" href="http://quarion.github.io/blog/2016/05/09/commands-and-aspects/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for Filip Gibki" href="/blog/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/pixyll.css?201605101616" type="text/css">
+
+    <!-- Fonts -->
+    
+    <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
+    
+    
+      <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    
+
+    <!-- MathJax -->
+    
+
+    <!-- Verifications -->
+    
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Commands and Aspects">
+    <meta property="og:description" content="Filip&#39;s Notebook">
+    <meta property="og:url" content="http://quarion.github.io/2016/05/09/commands-and-aspects/">
+    <meta property="og:site_name" content="Filip Gibki">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+        <meta name="twitter:site" content="@FilipGibki" />
+    
+    <meta name="twitter:title" content="Commands and Aspects" />
+    <meta name="twitter:description" content="Filip's Notebook" />
+    <meta name="twitter:url" content="http://quarion.github.io/2016/05/09/commands-and-aspects/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+    
+    <script type="text/javascript">
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+       ga('create', 'UA-77506199-1', 'auto');
+       ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body class="site">
+  
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="http://quarion.github.io/blog" class="site-title">Filip Gibki</a>
+      <nav class="site-nav">
+        
+    
+
+    
+        <a href="/blog/about/">About</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+        <div class="social-icons">
+  <div class="social-icons-right">
+    
+      <a class="fa fa-github" href="https://github.com/quarion"></a>
+    
+    
+    
+    <a class="fa fa-rss" href="/blog/feed.xml"></a>
+    
+      <a class="fa fa-twitter" href="https://twitter.com/FilipGibki"></a>
+    
+    
+    
+    
+    
+    
+      <a class="fa fa-linkedin" href="https://www.linkedin.com/in/filipgibki"></a>
+    
+    
+    
+  </div>
+  <div class="right">
+    
+    
+    
+  </div>
+</div>
+<div class="clearfix"></div>
+
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>Commands and Aspects</h1>
+  <span class="post-meta">May 9, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    8 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <h2 id="building-block---the-command-pattern">Building block - the command pattern</h2>
+
+<p>Command pattern is a behavioral design pattern. The intent is to encapsulate specific behavior inside an object.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">BookOrderCommand</span> <span class="p">:</span> <span class="n">ICommand</span>
+<span class="p">{</span>
+   <span class="k">public</span> <span class="k">void</span> <span class="nf">Execute</span><span class="p">()</span>
+   <span class="p">{</span>
+       <span class="cm">/* Logic for creating new order in the system */</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// call the command somewhere in the application
+</span><span class="n">var</span> <span class="n">bookCommand</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">BookOrderCommand</span><span class="p">();</span>
+<span class="n">bookCommand</span><span class="p">.</span><span class="nf">Execute</span><span class="p">();</span>
+
+</code></pre>
+</div>
+
+<p>Using command classes allows you to divide the application logic into structured, re-usable components with precise responsibilities. It helps with the organization and navigation of the code.</p>
+
+<p>Great example of the benefits to code organization is the <em>CQRS</em> (Command Query Responsibility Segregation) architectural pattern.<br />
+This powerful pattern started from a simple rule for organizing application code called <em>command and query separation (CQS)</em>.</p>
+
+<blockquote>
+  <p>CQS is a principle, that states that system should be organized into clearly separated elements - commands, that changes the state of the system, but do not return any data, and queries, that return current state, but don’t have any side effects.</p>
+</blockquote>
+
+<h3 id="benefits-of-using-command-objects">Benefits of using command objects</h3>
+
+<p>In addition to the organizational benefits, encapsulating the application logic inside command objects allows us to use additional, powerful techniques.</p>
+
+<ul>
+  <li>
+    <p>Polymorphic behavior - Separate the behavior interface from the specific implementation.</p>
+
+    <p>As an example, imagine that you have an UI component with a text box and a “submit” button. This component knows how to handle Submit command with a following signature:</p>
+
+    <p><code class="highlighter-rouge">public void Submit(string text)</code></p>
+
+    <p>In your application you can have many such controls, each assigned to a different command (eg.  “send e-mail command” or “change user name command”), and some of the commands can even be assigned dynamically at the run time.</p>
+
+    <p>Polymorphism is the most important property of the object-oriented languages.</p>
+  </li>
+  <li>
+    <p>Composition - Allows to compose different command objects inside a “macro” command to create new behaviors.</p>
+  </li>
+  <li>
+    <p>Control of indirection - Commands execution can be triggered by events or messages from a queue. Having a clear responsibility of how events and messages can be handled, helps to reason about the logic flow in the system and makes the code maintenance easier.</p>
+  </li>
+  <li>
+    <p>Deferred execution - Commands object can be saved “for later use”, together with its properties. Such commands can be queued, or just saved as “templates” for execution at any time in the future.</p>
+  </li>
+  <li>
+    <p><em>Aspect oriented programming</em> - Structuring application logic using commands allows us to easily decorate them with different aspects. Aspects handles cross-cutting concerns, like logging or error handling.</p>
+  </li>
+</ul>
+
+<h3 id="potential-pitfalls">Potential pitfalls</h3>
+
+<ul>
+  <li>Anemic models - Using commands brings in the same danger, as concentrating all application logic inside service classes. Our object model become anemic, and we loose many advantages of the object-oriented design.</li>
+</ul>
+
+<p>To alleviate this risk, we should focus our commands in the application and infrastructure layer (see <strong>Onion Architecture</strong>). This way, we can keep our behavior-rich object model inside the domain layer.</p>
+
+<h2 id="implementing-the-pattern">Implementing the pattern</h2>
+
+<p>To implement the commands handling in your system, it is useful to create some basic interfaces or abstract classes, that will clearly mark specific class as a command, and allow us to use polymorphism. In C# it is best implemented using generic interfaces.</p>
+
+<h3 id="commands-and-command-handlers">Commands and command handlers</h3>
+
+<p>There are two different ways that we can implement the command pattern</p>
+
+<blockquote>
+  <p>Both the input parameters and the execution logic are contained inside a single <strong>Command</strong> class.</p>
+</blockquote>
+
+<p>Or</p>
+
+<blockquote>
+  <p>The input parameters and the execution logic are separated into <strong>Command</strong> and <strong>Command Handler</strong> classes.</p>
+</blockquote>
+
+<p>Separating the <em>Command</em> and <em>Command Handler</em> have a number of advantages. It makes it easier to create generic, <em>Dependency Injection</em> friendly interfaces, or to make the command handlers work with messages from a message bus.</p>
+
+<p>Following code shows our definition of the Command and Command Handler abstractions.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">public</span> <span class="k">interface</span> <span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="k">in</span> <span class="n">TCommand</span><span class="p">&gt;</span>
+<span class="p">{</span>
+   <span class="k">void</span> <span class="nf">Execute</span><span class="p">(</span><span class="n">TCommand</span> <span class="n">request</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">interface</span> <span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="k">in</span> <span class="n">TCommand</span><span class="p">,</span> <span class="k">out</span> <span class="n">TResult</span><span class="p">&gt;</span>
+<span class="p">{</span>
+   <span class="n">TResult</span> <span class="nf">Execute</span><span class="p">(</span><span class="n">TCommand</span> <span class="n">request</span><span class="p">);</span>
+
+   <span class="c1">//In CQS canonical command do not return any value. But in practice some commands sometimes returns data.
+</span>   <span class="c1">//For example "CreateOrder" command may return the ID of the created order
+</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>The example shows only definitions for the <em>command</em> side. But following the <em>CQS</em> practices, we should define similar structures for the <em>query</em> operations.</p>
+
+<p>Using the ICommandHandler interface, we can implement concrete application operations.<br />
+Following example shows a command that handles creating a new order in the system.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">BookOrderCommand</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">DeliveryAddres</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">OrderItemIds</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BookOrderCommandHandler</span> <span class="p">:</span> <span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="n">BookOrderCommand</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IOrderRepository</span> <span class="n">_orderRepository</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IValidator</span><span class="p">&lt;</span><span class="n">BookOrderCommand</span><span class="p">&gt;</span> <span class="n">_validator</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">BookOrderCommandHandler</span><span class="p">(</span><span class="n">IOrderRepository</span> <span class="n">orderService</span><span class="p">,</span> <span class="n">IValidator</span><span class="p">&lt;</span><span class="n">BookOrderCommand</span><span class="p">&gt;</span> <span class="n">validator</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_orderRepository</span> <span class="p">=</span> <span class="n">orderService</span><span class="p">;</span>
+        <span class="n">_validator</span> <span class="p">=</span> <span class="n">validator</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Execute</span><span class="p">(</span><span class="n">BookOrderCommand</span> <span class="n">command</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="n">_validator</span><span class="p">.</span><span class="nf">Validate</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+
+            <span class="n">var</span> <span class="n">order</span> <span class="p">=</span> <span class="n">Order</span><span class="p">.</span><span class="nf">CreateNew</span><span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="n">DeliveryAddres</span><span class="p">,</span> <span class="n">command</span><span class="p">.</span><span class="n">OrderItemIds</span><span class="p">);</span>
+
+            <span class="n">_orderRepository</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">//handle all exceptions, including validation
+</span>            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>With a command like this, in our application we would expect to call <code class="highlighter-rouge">ICommandHandler&lt;BookOrderCommand&gt;</code> interface. It may be a callback implemented as public property on some object, or a constructor dependency that will be injected with <em>IoC container</em> inside one of our application services.</p>
+
+<h2 id="adding-aspects-to-your-commands">Adding <em>aspects</em> to your <em>commands</em></h2>
+
+<p>As you may have noticed in the Book Order example, the command handler have three responsibilities, of with two are general, and only one is specific for this particular use case.<br />
+The responsibilities are:</p>
+
+<ol>
+  <li>Validate input data.</li>
+  <li>Execute business logic using domain model.</li>
+  <li>Handle all exceptions.</li>
+</ol>
+
+<p>If we would continue to add more functionality to our application, we would spot this as a pattern - there are responsibilities common for the entire system (<em>cross cutting concerns</em>) and responsibilities specific for a given command.</p>
+
+<p>To avoid duplicating the code responsible for those cross cutting concerns, we can apply simple refactoring using a decorator pattern.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">ErrorHandlingAspect</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="n">_commandHandler</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">ErrorHandlingAspect</span><span class="p">(</span><span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="n">commandHandler</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_commandHandler</span> <span class="p">=</span> <span class="n">commandHandler</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Execute</span><span class="p">(</span><span class="n">TCommand</span> <span class="n">request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="n">_commandHandler</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">ValidationAspect</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="n">_commandHandler</span><span class="p">;</span>
+    <span class="k">private</span> <span class="k">readonly</span> <span class="n">IValidator</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="n">_validator</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">ValidationAspect</span><span class="p">(</span><span class="n">ICommandHandler</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="n">commandHandler</span><span class="p">,</span> <span class="n">IValidator</span><span class="p">&lt;</span><span class="n">TCommand</span><span class="p">&gt;</span> <span class="n">validator</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_commandHandler</span> <span class="p">=</span> <span class="n">commandHandler</span><span class="p">;</span>
+        <span class="n">_validator</span> <span class="p">=</span> <span class="n">validator</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Execute</span><span class="p">(</span><span class="n">TCommand</span> <span class="n">request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">_validator</span><span class="p">.</span><span class="nf">Validate</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+
+        <span class="n">_commandHandler</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Those two decorator classes represents two <em>aspects</em> that now can be re-used for all of the commands. Following code shows how to call a decorated command.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">var</span> <span class="n">_commandHandler</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ErrorHandlingAspect</span><span class="p">&lt;</span><span class="n">BookOrderCommand</span><span class="p">&gt;(</span>
+                                <span class="k">new</span> <span class="n">ValidationAspect</span><span class="p">&lt;</span><span class="n">BookOrderCommand</span><span class="p">&gt;(</span>
+                                    <span class="k">new</span> <span class="nf">BookOrderCommandHandler</span><span class="p">(</span><span class="n">repository</span><span class="p">),</span> <span class="n">validator</span><span class="p">));</span>
+
+<span class="n">_commandHandler</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="k">new</span> <span class="nf">BookOrderCommand</span><span class="p">()</span> <span class="p">{</span><span class="n">DeliveryAddres</span> <span class="p">=</span> <span class="s">"address"</span><span class="p">});</span>
+</code></pre>
+</div>
+
+<p>Similarly to the command pattern itself, aspect decorators pattern gets more useful the more complex our application becomes.</p>
+
+<p>Common aspects that can be extracted using this technique are:</p>
+
+<ul>
+  <li>Input validation</li>
+  <li>Error handling - catching exceptions, logging them, creating error responses.</li>
+  <li>Transaction handling - start a transaction before handling a command, and roll it back if there are any exceptions.</li>
+  <li>Logging - all executed commands and their parameters can be logged to produce full inspection log of the system activity.</li>
+  <li>Security - common mechanism for verification if command can be handled under current circumstances (e.g. check if the user is authenticated).</li>
+</ul>
+
+<h2 id="handling-complexity-with-an-ioc-container">Handling complexity with an IoC container</h2>
+
+<p>Separating application logic into smaller classes makes it harder to maintain all of the different classes dependencies “by hand”. In addtion, using aspects greatly magnifies this issue (as you can see in the example with command and aspect execution). To maintain this complexity, we should use an IoC container and register all of our command handlers and aspects there.</p>
+
+<p>As we are dealing with lot of smaller classes, it is very helpful if our container have an API that allows us to use convention to register all of the generic Command Handler classes and their Aspect automatically.
+Following example shows how to configure such convention with <em>Ninject</em> container (using <em>Ninject.Extensions.Conventions</em> package).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">CommandsNinjectModule</span> <span class="p">:</span> <span class="n">NinjectModule</span>
+<span class="p">{</span>
+   <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Load</span><span class="p">()</span>
+   <span class="p">{</span>
+       <span class="c1">//(...)
+</span>
+       <span class="c1">//Validators
+</span>       <span class="n">Kernel</span><span class="p">.</span><span class="nf">Bind</span><span class="p">(</span><span class="n">scanner</span> <span class="p">=&gt;</span> <span class="n">scanner</span>
+           <span class="p">.</span><span class="nf">FromThisAssembly</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">IncludingNonePublicTypes</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">SelectAllClasses</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">InheritedFrom</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IValidator</span><span class="p">&lt;&gt;))</span>
+           <span class="p">.</span><span class="nf">WhichAreNotGeneric</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">BindSingleInterface</span><span class="p">());</span>
+
+       <span class="c1">//Commands
+</span>       <span class="n">Kernel</span><span class="p">.</span><span class="nf">Bind</span><span class="p">(</span><span class="n">scanner</span> <span class="p">=&gt;</span> <span class="n">scanner</span>
+           <span class="p">.</span><span class="nf">FromThisAssembly</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">IncludingNonePublicTypes</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">SelectAllClasses</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">InheritedFrom</span><span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="n">ICommandHandler</span><span class="p">&lt;&gt;))</span>
+           <span class="p">.</span><span class="nf">WhichAreNotGeneric</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">BindSingleInterface</span><span class="p">()</span>
+           <span class="p">.</span><span class="nf">Configure</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span>
+               <span class="p">.</span><span class="nf">WhenInjectedInto</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">ValidationAspect</span><span class="p">&lt;&gt;))));</span>
+
+       <span class="c1">//Aspects
+</span>       <span class="nf">Bind</span><span class="p">(</span><span class="k">typeof</span> <span class="p">(</span><span class="n">ICommandHandler</span><span class="p">&lt;&gt;)).</span><span class="nf">To</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">ValidationAspect</span><span class="p">&lt;&gt;))</span>
+           <span class="p">.</span><span class="nf">WhenInjectedInto</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">ErrorHandlingAspect</span><span class="p">&lt;&gt;));</span>
+
+       <span class="nf">Bind</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">ICommandHandler</span><span class="p">&lt;&gt;)).</span><span class="nf">To</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">ErrorHandlingAspect</span><span class="p">&lt;&gt;));</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>In the snippet we do the following:</p>
+
+<ul>
+  <li>Register all validators (classes that inherit from <code class="highlighter-rouge">IValidator&lt;T&gt;</code> interface)</li>
+  <li>Register all command handlers (classes that inherit from <code class="highlighter-rouge">ICommandHandler&lt;TCommand&gt;</code> interface). Note, that we specify first aspects (<code class="highlighter-rouge">ValidationAspect&lt;&gt;</code>) in our decorator chain there with the <code class="highlighter-rouge">WhenInjectedInto</code> method.</li>
+  <li>Register all aspects classes creating a chain of decorators. Here you need to pay special attention to <code class="highlighter-rouge">WhenInjectedInto</code> rules, as they specify the order of decorators in the chain. For example, for us it is important, that Validation aspect will be executed before Error Handling aspect, as our validation also may throw exceptions.</li>
+</ul>
+
+<p>It is important to note, that not all containers may support creating decorators chains, or allow for easy, automated registrations. For example, Microsoft Unity requires a <a href="http://www.beefycode.com/post/Decorator-Unity-Container-Extension.aspx">custom extension</a> to enable it to register and resolve decorators.</p>
+
+<h2 id="example-sources">Example sources</h2>
+
+<p>Full source code including examples from this article is available on <a href="https://github.com/quarion/CommandsAndAspects">GitHub</a></p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>
+    <p><a href="http://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612">Design Patterns: Elements of Reusable Object-Oriented Software</a></p>
+  </li>
+  <li>
+    <p><a href="http://martinfowler.com/bliki/CommandQuerySeparation.html">http://martinfowler.com/bliki/CommandQuerySeparation.html</a></p>
+  </li>
+  <li>
+    <p><a href="https://cuttingedge.it/blogs/steven/pivot/entry.php?id=91">Meanwhile… on the command side of my architecture</a></p>
+  </li>
+</ul>
+
+</article>
+
+
+  <div class="share-page">
+  Share this post!
+
+  <div class="share-links">
+    
+      <a class="fa fa-facebook" href="https://facebook.com/sharer.php?u=http://quarion.github.io/2016/05/09/commands-and-aspects/" rel="nofollow" target="_blank" title="Share on Facebook"></a>
+    
+
+    
+      <a class="fa fa-twitter" href="https://twitter.com/intent/tweet?text=Commands and Aspects&url=http://quarion.github.io/2016/05/09/commands-and-aspects/" rel="nofollow" target="_blank" title="Share on Twitter"></a>
+    
+
+    
+      <a class="fa fa-google-plus" href="https://plus.google.com/share?url=http://quarion.github.io/2016/05/09/commands-and-aspects/" rel="nofollow" target="_blank" title="Share on Google+"></a>
+    
+
+    
+      <a class="fa fa-linkedin" href="http://www.linkedin.com/shareArticle?url=http://quarion.github.io/2016/05/09/commands-and-aspects/&title=Commands and Aspects" rel="nofollow" target="_blank" title="Share on LinkedIn"></a>
+    
+
+    
+
+    
+
+    
+      <a class="fa fa-reddit" href="http://reddit.com/submit?url=http://quarion.github.io/2016/05/09/commands-and-aspects/&title=Commands and Aspects" rel="nofollow" target="_blank" title="Share on Reddit"></a>
+    
+
+    
+
+    
+      <a class="fa fa-hacker-news" onclick="parent.postMessage('submit','*')" href="https://news.ycombinator.com/submitlink?u=http://quarion.github.io/2016/05/09/commands-and-aspects/&t=Commands and Aspects" rel="nofollow" target="_blank" title="Share on Hacker News"></a>
+    
+  </div>
+</div>
+
+
+
+
+
+
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'quarion';
+    var disqus_identifier = '/2016/05/09/commands-and-aspects';
+    var disqus_title      = 'Commands and Aspects';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      Powered by <a href="http://jekyllrb.com">Jekyll</a>, theme by John Otander available on <a href="https://github.com/johnotander/pixyll">Github</a>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-FROM jekyll/jekyll:pages
+FROM jekyll/jekyll
 
 # Install whatever is in your Gemfile
 WORKDIR /tmp
