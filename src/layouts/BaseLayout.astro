@@ -1,0 +1,66 @@
+---
+import "../styles/global.css";
+import { site } from "../lib/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  type?: "website" | "article";
+}
+
+const {
+  title,
+  description = site.description,
+  canonicalPath = Astro.url.pathname,
+  type = "website",
+} = Astro.props;
+const pageTitle = title ? `${title} — ${site.title}` : site.title;
+const canonical = new URL(canonicalPath, Astro.site);
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title={`${site.title} RSS`} href="/feed.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.title} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:url" content={canonical} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-header">
+      <div class="measure header-inner">
+        <a class="site-title" href="/">{site.title}</a>
+        <nav aria-label="Primary navigation">
+          <a href="/about/">About</a>
+          <a href="/feed.xml">RSS</a>
+        </nav>
+      </div>
+    </header>
+    <main id="content" class="measure">
+      <slot />
+    </main>
+    <footer class="site-footer measure">
+      <p>
+        <a href={site.social.github} rel="me">GitHub</a>
+        <span aria-hidden="true">·</span>
+        <a href={site.social.linkedin} rel="me">LinkedIn</a>
+      </p>
+    </footer>
+  </body>
+</html>
