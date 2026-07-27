@@ -1,0 +1,86 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { historicalDiscussions } from "../data/historical-discussions";
+import { postPath } from "../lib/site";
+
+interface Props {
+  title: string;
+  description: string;
+  publishedAt: Date;
+  slug: string;
+}
+
+const { title, description, publishedAt, slug } = Astro.props;
+const historicalDiscussion = historicalDiscussions[slug];
+const formattedDate = new Intl.DateTimeFormat("en", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+}).format(publishedAt);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={postPath(slug)}
+  type="article"
+>
+  <article class="post">
+    <header class="post-header">
+      <h1>{title}</h1>
+      <time datetime={publishedAt.toISOString()}>{formattedDate}</time>
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+    {
+      historicalDiscussion && (
+        <aside class="historical-discussion" aria-labelledby="historical-discussion">
+          <h2 id="historical-discussion">Historical discussion from 2016</h2>
+          <p class="historical-discussion-intro">
+            Recovered verbatim from the original public thread.
+          </p>
+          <ol class="historical-comments">
+            {
+              historicalDiscussion.comments.map((comment) => {
+                const parent = comment.parentId
+                  ? historicalDiscussion.comments.find(
+                      (candidate) => candidate.id === comment.parentId,
+                    )
+                  : undefined;
+
+                return (
+                  <li
+                    id={`historical-comment-${comment.id}`}
+                    class={`historical-comment${parent ? " is-reply" : ""}`}
+                  >
+                    <article>
+                      <header class="historical-comment-meta">
+                        <strong>{comment.author}</strong>
+                        <span aria-hidden="true">·</span>
+                        <time datetime={comment.createdAt}>
+                          {comment.displayDate}
+                          {comment.edited && " (edited)"}
+                        </time>
+                      </header>
+                      {parent && (
+                        <p class="historical-comment-reply">Reply to {parent.author}</p>
+                      )}
+                      <div class="historical-comment-message">
+                        {comment.message.map((paragraph) => <p>{paragraph}</p>)}
+                      </div>
+                    </article>
+                  </li>
+                );
+              })
+            }
+          </ol>
+          <p class="historical-discussion-source">
+            Retrieved from the live legacy thread on 27 July 2026. No Disqus scripts or trackers
+            are loaded.
+          </p>
+        </aside>
+      )
+    }
+  </article>
+</BaseLayout>
