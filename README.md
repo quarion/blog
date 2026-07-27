@@ -20,10 +20,11 @@ npm test
 
 ## Publishing
 
-Pull requests build and validate the site. A push to the default branch also
-publishes the generated `dist/` artifact to GitHub Pages. Generated files are
-never committed.
+Pull requests build and validate the site. A push to `main`, or a manual
+workflow run on `main`, publishes the generated `dist/` artifact to GitHub
+Pages. Generated files are never committed.
 
-The production origin is `https://blog.quarion.dev`. See
-[`docs/migration-spec.md`](docs/migration-spec.md) for migration decisions,
-content-recovery instructions, acceptance criteria, and the manual cutover.
+This is a public source repository. Commit published articles here; keep
+working drafts in private storage until they are ready to publish.
+
+The production origin is `https://blog.quarion.dev`.
