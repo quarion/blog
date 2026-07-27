@@ -11,9 +11,11 @@ This article is first one in the series on incorporating events into an applicat
 
 The backbone of such a system is a communication pipeline (a *bus*) that allows event Subscribers and Publishers to exchange messages.
 
-This kind of communication can be introduced into the application using **Event Aggregator** pattern. *Event Aggregator* is an abstraction for a common source of events, that allows Subscribers and Publishers to use it independently, without knowledge of each other.
+
+This kind of communication can be introduced into the application using **Event Aggregator** pattern. *Event Aggregator* is an abstraction for a common source of events, that allows Subscribers and Publishers to use it independently, without knowledge of each other.  
 
 Concrete implementation of this pattern can have many variations, but it can be divided into two categories - *Event Bus* and *Event Collection*
+
 
 ## Event Collection
 
@@ -21,7 +23,7 @@ Concrete implementation of this pattern can have many variations, but it can be 
 
 Example of an *Event Collection* in a *C#* language (full example is available on [Github](https://github.com/quarion/EventAggregator/tree/master/EventCollection))
 
-```csharp
+``` csharp
 class EventAggregator
 {
     // Events definitions
@@ -47,6 +49,8 @@ class EventAggregator
 
 While this implementation is very simple, and may be useful in small applications, at the same time it is very limited. Maintaining the list of events as public properties (often with public methods to dispatch them) may be very cumbersome and inflexible. As the number of different events in the system grows, it may be difficult to maintain.
 
+
+
 ## Event Bus
 
 **Event Bus** is a class, that exposes a generic way for handling events. It can route any event to any Subscriber, without defining them explicitly and up front.
@@ -55,7 +59,7 @@ The concrete implementation may vary, especial depending on what a given program
 
 Signature of an *Event Bus* in a pseudo code
 
-```csharp
+``` csharp
 public class SimpleEventAggregator
 {
     public void Subscribe(eventKey, eventHandler);
@@ -68,7 +72,7 @@ For a .NET ecosystem, a very good implementation of the *Event Bus* is available
 
 Quick example of publishing an event with *Caliburn.Micro* *EventAggregator* (full example available on [Github](https://github.com/quarion/EventAggregator/tree/master/EventBus))
 
-```csharp
+``` csharp
 class Producer
 {
     private readonly IEventAggregator _eventAggregator;
@@ -106,6 +110,5 @@ class OrderCreatedEvent
 
 ## References
 
-<http://martinfowler.com/eaaDev/EventAggregator.html>
-
-<http://caliburnmicro.com/documentation/event-aggregator>
+[http://martinfowler.com/eaaDev/EventAggregator.html](http://martinfowler.com/eaaDev/EventAggregator.html)  
+[http://caliburnmicro.com/documentation/event-aggregator](http://caliburnmicro.com/documentation/event-aggregator)

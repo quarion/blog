@@ -1,7 +1,8 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const dist = new URL("../dist/", import.meta.url);
+const dist = fileURLToPath(new URL("../dist/", import.meta.url));
 const expected = [
   "index.html",
   "about/index.html",
@@ -18,7 +19,7 @@ const generatedHtml = new Map();
 
 for (const path of expected) {
   try {
-    const file = join(dist.pathname, path);
+    const file = join(dist, path);
     const metadata = await stat(file);
     if (!metadata.isFile() || metadata.size === 0) errors.push(`${path}: missing or empty`);
   } catch {
@@ -28,7 +29,7 @@ for (const path of expected) {
 
 for (const path of expected.filter((path) => path.endsWith(".html"))) {
   try {
-    const html = await readFile(join(dist.pathname, path), "utf8");
+    const html = await readFile(join(dist, path), "utf8");
     generatedHtml.set(path, html);
     if (!html.includes('lang="en"')) errors.push(`${path}: missing document language`);
     if (!html.includes("https://blog.quarion.dev")) errors.push(`${path}: missing production URL`);
@@ -73,14 +74,14 @@ async function collectHtmlPaths(directory, prefix = "") {
   return paths;
 }
 
-for (const path of await collectHtmlPaths(dist.pathname)) {
-  const html = generatedHtml.get(path) ?? (await readFile(join(dist.pathname, path), "utf8"));
+for (const path of await collectHtmlPaths(dist)) {
+  const html = generatedHtml.get(path) ?? (await readFile(join(dist, path), "utf8"));
   const hrefPattern = /href="([^"]+)"/g;
   for (const [, href] of html.matchAll(hrefPattern)) {
     if (!href.startsWith("/") || href.startsWith("//")) continue;
 
     const pathname = href.split(/[?#]/, 1)[0];
-    let target = normalize(join(dist.pathname, pathname));
+    let target = normalize(join(dist, pathname));
     if (pathname.endsWith("/")) target = join(target, "index.html");
     if (!extname(target)) target = join(target, "index.html");
 

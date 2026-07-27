@@ -1,6 +1,6 @@
 # Blog migration: agreed end state and execution handoff
 
-Status: **agreed in principle; implementation sandbox prepared; production cutover not authorized**
+Status: **original source recovered and imported; production cutover not authorized**
 
 This document is the reviewable specification and Codex handoff for migrating
 [`quarion/blog`](https://github.com/quarion/blog) from its frozen 2016 Jekyll
@@ -88,9 +88,15 @@ The converted Markdown preserves the published wording and corrects the
 generated HTML's double-escaping of C# generic angle brackets. It should be
 treated as a reliable fallback, not assumed to be the original authoring source.
 
-### Search the old PC before final content approval
+### Recovered original source
 
-Search the PC and backups for:
+The original Markdown repository was recovered and compared with the prepared
+Astro content on 2026-07-27. The original post bodies and three useful drafts
+were imported while retaining the prepared schema and compatibility routes.
+See [`original-source-recovery.md`](original-source-recovery.md) for the
+repository history, working-tree state, and content comparison.
+
+For any future recovery from another backup, search the PC and backups for:
 
 - `_posts`
 - `_config.yml`
@@ -100,7 +106,7 @@ Search the PC and backups for:
 - `Event based design`
 - `Gemfile`
 
-If a candidate directory is found, preserve the whole directory, including
+If another candidate directory is found, preserve the whole directory, including
 hidden files and any `.git` directory. Do not run a legacy build or dependency
 upgrade first.
 

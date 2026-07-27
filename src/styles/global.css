@@ -241,6 +241,10 @@ main {
   font-style: italic;
 }
 
+.prose a {
+  overflow-wrap: anywhere;
+}
+
 .prose :not(pre) > code {
   padding: 0.12em 0.32em;
   border: 1px solid var(--rule);
