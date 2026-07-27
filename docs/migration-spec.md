@@ -130,18 +130,16 @@ Then merge original source into this prepared structure:
 ### Historical comments
 
 The old Disqus forum shortname is `quarion`; the stable identifier is
-`/2016/05/09/commands-and-aspects`. The public archive previously showed three
-comments on that post and none on the other post.
+`/2016/05/09/commands-and-aspects`. On 2026-07-27, the live legacy page and its
+embedded Disqus thread were still available. The thread payload supplied all
+three approved comments with exact author names, usernames, comment IDs, ISO
+creation timestamps, edited state, parent/reply relationship, and raw text.
 
-The sandbox intentionally contains a visible import marker instead of invented
-quotes. During recovery:
-
-1. export or retrieve the three comments with author, timestamp, parent/reply
-   relationship, and text;
-2. verify them against the public thread or Disqus export;
-3. store the verified discussion as repository-owned content;
-4. render it as a compact “Historical discussion from 2016” section;
-5. remove the temporary import marker.
+The verified records are stored in
+`src/data/historical-discussions.ts` and rendered as a compact “Historical
+discussion from 2016” section. The reply relationship and edited state are
+shown, while source identifiers and timestamps remain in repository-owned
+data. The temporary import marker has been removed.
 
 Do not load Disqus JavaScript. Giscus remains disabled unless a later decision
 enables it.

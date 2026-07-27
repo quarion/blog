@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import { historicalDiscussions } from "../data/historical-discussions";
 import { postPath } from "../lib/site";
 
 interface Props {
@@ -7,10 +8,10 @@ interface Props {
   description: string;
   publishedAt: Date;
   slug: string;
-  historicalDiscussion?: boolean;
 }
 
-const { title, description, publishedAt, slug, historicalDiscussion = false } = Astro.props;
+const { title, description, publishedAt, slug } = Astro.props;
+const historicalDiscussion = historicalDiscussions[slug];
 const formattedDate = new Intl.DateTimeFormat("en", {
   day: "numeric",
   month: "long",
@@ -35,11 +36,48 @@ const formattedDate = new Intl.DateTimeFormat("en", {
     {
       historicalDiscussion && (
         <aside class="historical-discussion" aria-labelledby="historical-discussion">
-          <h2 id="historical-discussion">Historical discussion</h2>
-          <p>
-            This article had three Disqus comments in 2016. Their verbatim text will be imported
-            from the public archive during source recovery; no Disqus scripts or trackers are
-            loaded here.
+          <h2 id="historical-discussion">Historical discussion from 2016</h2>
+          <p class="historical-discussion-intro">
+            Recovered verbatim from the original public thread.
+          </p>
+          <ol class="historical-comments">
+            {
+              historicalDiscussion.comments.map((comment) => {
+                const parent = comment.parentId
+                  ? historicalDiscussion.comments.find(
+                      (candidate) => candidate.id === comment.parentId,
+                    )
+                  : undefined;
+
+                return (
+                  <li
+                    id={`historical-comment-${comment.id}`}
+                    class={`historical-comment${parent ? " is-reply" : ""}`}
+                  >
+                    <article>
+                      <header class="historical-comment-meta">
+                        <strong>{comment.author}</strong>
+                        <span aria-hidden="true">·</span>
+                        <time datetime={comment.createdAt}>
+                          {comment.displayDate}
+                          {comment.edited && " (edited)"}
+                        </time>
+                      </header>
+                      {parent && (
+                        <p class="historical-comment-reply">Reply to {parent.author}</p>
+                      )}
+                      <div class="historical-comment-message">
+                        {comment.message.map((paragraph) => <p>{paragraph}</p>)}
+                      </div>
+                    </article>
+                  </li>
+                );
+              })
+            }
+          </ol>
+          <p class="historical-discussion-source">
+            Retrieved from the live legacy thread on 27 July 2026. No Disqus scripts or trackers
+            are loaded.
           </p>
         </aside>
       )

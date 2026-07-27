@@ -54,6 +54,10 @@ const contentSentinels = {
     "ValidationAspect",
     "CommandsNinjectModule",
     "Meanwhile… on the command side of my architecture",
+    "Historical discussion from 2016",
+    "Tyler Ayers",
+    "Nice article (note ;-))",
+    "Hi Krzysztof. Thanks for commenting.",
   ],
 };
 

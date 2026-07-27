@@ -3,7 +3,6 @@ title: Commands and Aspects
 description: Encapsulating application behavior as commands and applying reusable cross-cutting concerns through decorators.
 publishedAt: 2016-05-09
 slug: 2016/05/09/commands-and-aspects
-historicalDiscussion: true
 ---
 
 Building block - the command pattern

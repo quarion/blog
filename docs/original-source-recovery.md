@@ -49,7 +49,7 @@ the two published posts; those were not duplicated as current drafts.
 ## Deliberately retained
 
 - Astro content schema, layouts, styling, routes, and validation.
-- The tracker-free historical-discussion marker pending verbatim Disqus
-  recovery.
+- The tracker-free historical discussion, recovered verbatim from the live
+  legacy Disqus thread on 2026-07-27.
 - The production safety boundary: this work does not alter Pages, DNS, the
   default branch, or live `gh-pages` content.

@@ -10,7 +10,6 @@ const posts = defineCollection({
     publishedAt: z.coerce.date(),
     slug: z.string(),
     draft: z.boolean().default(false),
-    historicalDiscussion: z.boolean().default(false),
   }),
 });
 
