@@ -1,4 +1,5 @@
 ---
+import CloudflareAnalytics from "../components/CloudflareAnalytics.astro";
 import "../styles/global.css";
 import { site } from "../lib/site";
 
@@ -40,6 +41,7 @@ const canonical = new URL(canonicalPath, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:url" content={canonical} />
     <title>{pageTitle}</title>
+    <CloudflareAnalytics />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>

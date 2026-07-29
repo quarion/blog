@@ -3,6 +3,8 @@ import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const dist = fileURLToPath(new URL("../dist/", import.meta.url));
+const analyticsToken = process.env.CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim() ?? "";
+const cloudflareBeaconUrl = "https://static.cloudflareinsights.com/beacon.min.js";
 const expected = [
   "index.html",
   "about/index.html",
@@ -80,6 +82,28 @@ async function collectHtmlPaths(directory, prefix = "") {
 
 for (const path of await collectHtmlPaths(dist)) {
   const html = generatedHtml.get(path) ?? (await readFile(join(dist, path), "utf8"));
+  const beaconCount = html.split(cloudflareBeaconUrl).length - 1;
+  const beaconConfigCount = (html.match(/\bdata-cf-beacon=/g) ?? []).length;
+  const cloudflareInsightReferences =
+    html.match(/https:\/\/[^"' <]*cloudflareinsights\.com[^"' <]*/gi) ?? [];
+  const unexpectedCloudflareReferences = cloudflareInsightReferences.filter(
+    (reference) => reference !== cloudflareBeaconUrl,
+  );
+
+  if (unexpectedCloudflareReferences.length) {
+    errors.push(`${path}: unexpected Cloudflare Insights resource`);
+  }
+
+  if (analyticsToken) {
+    if (beaconCount !== 1 || beaconConfigCount !== 1) {
+      errors.push(`${path}: expected exactly one Cloudflare Web Analytics beacon`);
+    } else if (!html.includes(analyticsToken)) {
+      errors.push(`${path}: Cloudflare Web Analytics token mismatch`);
+    }
+  } else if (beaconCount !== 0 || beaconConfigCount !== 0) {
+    errors.push(`${path}: analytics included without production configuration`);
+  }
+
   const hrefPattern = /href="([^"]+)"/g;
   for (const [, href] of html.matchAll(hrefPattern)) {
     if (!href.startsWith("/") || href.startsWith("//")) continue;
