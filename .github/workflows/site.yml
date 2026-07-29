@@ -28,6 +28,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Validate and build
+        env:
+          CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.CLOUDFLARE_WEB_ANALYTICS_TOKEN || '' }}
         run: npm test
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
